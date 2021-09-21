@@ -1,0 +1,30 @@
+{
+	"credentials": {
+		"username": "user",
+		"password": "pass"
+	},
+	"calendar": {
+		"monday": [
+			{
+				"building": "",
+				"classroom": "",
+				"shift_start": "",
+				"start_end": ""
+			},
+			{
+				"building": "",
+				"classroom": "",
+				"shift_start": "",
+				"shift_end": ""
+			}
+		],
+		"tuesday": [
+			{
+				"building": "",
+				"classroom": "",
+				"shift_start": "",
+				"shift_end": ""
+			}
+		]
+	}
+}
