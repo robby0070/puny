@@ -1,3 +1,5 @@
+import sys
+import getopt
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -46,7 +48,7 @@ def main():
 
         options = Options()
         options.headless = True
-        with webdriver.Firefox() as driver:
+        with webdriver.Firefox(options=options) as driver:
             w = WebDriverWait(driver, 5)
             driver.get("https://www.unimore.it/covid19/trovaaula.html")
             click(driver, "/html/body/div[3]/p/a[1]")
