@@ -62,6 +62,7 @@ for c in today:
             if (start <= shift_start) and (end >= shift_end):
                 found = True
                 s.click()
+                break
         if not found:
             print("can't find your shift")
 
