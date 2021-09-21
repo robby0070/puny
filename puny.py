@@ -30,6 +30,7 @@ def type(driver, xpath, str):
 
 
 def main():
+    print("starting script...")
     user, password = "", ""
     today = []
 
@@ -38,6 +39,10 @@ def main():
         user = data["credentials"]["username"]
         password = data["credentials"]["password"]
         today_str = calendar.day_name[date.today().weekday()].lower()
+        if not today_str in data["calendar"].keys():
+            print("no classes for today!")
+            exit(0)
+
         today = data["calendar"][today_str]
 
     for c in today:
@@ -46,9 +51,15 @@ def main():
         shift_start = strToHour(c["shift_start"])
         shift_end = strToHour(c["shift_end"])
 
+        print("\n\n*******************************************")
+        print(f"trying to book class building {building}, "
+              f"classroom {classroom}, from {shift_start.strftime('%H:%M')} "
+              f"to {shift_end.strftime('%H:%M')}")
+
         options = Options()
         options.headless = True
         with webdriver.Firefox(options=options) as driver:
+            print("starting web driver")
             w = WebDriverWait(driver, 5)
             driver.get("https://www.unimore.it/covid19/trovaaula.html")
             click(driver, "/html/body/div[3]/p/a[1]")
@@ -71,13 +82,16 @@ def main():
                     break
             if not found:
                 print("can't find your shift")
+                continue
 
             # login
+            print("logging in...")
             type(driver, "//*[@id='username']", user)
             type(driver, "//*[@id='password']", password)
             click(driver, "/html/body/div/div/div/div[1]/form/div[4]/button")
             # confirm reservation
             click(driver, "/html/body/div[3]/div[4]/form/div/div/p[8]/button")
+            print("class booked successfully!")
 
 
 if __name__ == __name__:
