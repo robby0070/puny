@@ -1,16 +1,16 @@
-import sys
+import calendar
+import datetime
 import getopt
+import json
+import re
+import sys
+import time
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-import time
-import json
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.support import expected_conditions as EC
-import datetime
-from datetime import date
-import calendar
-import re
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 def strToHour(str):
@@ -38,7 +38,7 @@ def main():
         data = json.load(f)
         user = data["credentials"]["username"]
         password = data["credentials"]["password"]
-        today_str = calendar.day_name[date.today().weekday()].lower()
+        today_str = calendar.day_name[datetime.date.today().weekday()].lower()
         if not today_str in data["calendar"].keys():
             print("no classes for today!")
             exit(0)
