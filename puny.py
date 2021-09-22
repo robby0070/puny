@@ -1,9 +1,11 @@
+#!/usr/bin/python3
 import calendar
 import datetime
 import getopt
 import json
 import re
 import sys
+import getopt
 import time
 
 from selenium import webdriver
@@ -29,12 +31,29 @@ def type(driver, xpath, str):
     e.send_keys(str)
 
 
-def main():
+def main(argv):
+    filename = ""
+    try:
+        opts, args = getopt.getopt(argv, "hf:", ["help", "file:"])
+    except getopt.GetoptError:
+        print("puny.py -f file")
+        exit(1)
+    for opt, arg in opts:
+        if opt in ("-h", "help"):
+            print("puny.py -f file")
+            exit(0)
+        elif opt in ("-f", "--file"):
+            filename = arg
+
+    if not filename:
+        print("filenmae required, -h for help")
+        exit(1)
+
     print("starting script...")
     user, password = "", ""
     today = []
 
-    with open("classes.json", 'r') as f:
+    with open(filename, 'r') as f:
         data = json.load(f)
         user = data["credentials"]["username"]
         password = data["credentials"]["password"]
@@ -95,4 +114,4 @@ def main():
 
 
 if __name__ == __name__:
-    main()
+    main(sys.argv[1:])
